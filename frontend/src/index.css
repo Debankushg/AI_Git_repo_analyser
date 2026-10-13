@@ -1,0 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Design tokens: RGB triplets so Tailwind opacity modifiers work (e.g. bg-accent/10). */
+:root {
+  --canvas: 244 246 251;
+  --card: 255 255 255;
+  --subtle: 241 245 249;
+  --line: 235 226 204;
+  --fg: 15 23 42;
+  --muted: 100 116 139;
+  --accent: 176 125 14;
+  --accent-soft: 253 246 224;
+  --ok: 5 150 105;
+  --warn: 217 119 6;
+  --danger: 220 38 38;
+  --shadow: 15 23 42;
+  --gold: 176 125 14;
+  --gold-a: #f6e08e;
+  --gold-b: #c8962a;
+  --gold-c: #8c6112;
+  --hl-comment: 120 130 145; --hl-keyword: 194 65 12; --hl-string: 5 122 85; --hl-number: 29 78 216; --hl-title: 161 98 7; --hl-attr: 14 116 144;
+  color-scheme: light;
+}
+.dark {
+  --canvas: 8 11 19;
+  --card: 16 23 38;
+  --subtle: 27 37 56;
+  --line: 66 56 38;
+  --fg: 241 245 249;
+  --muted: 148 163 184;
+  --accent: 240 190 60;
+  --accent-soft: 56 42 14;
+  --ok: 52 211 153;
+  --warn: 251 191 36;
+  --danger: 248 113 113;
+  --shadow: 0 0 0;
+  --gold: 240 190 60;
+  --gold-a: #fbe9a0;
+  --gold-b: #e0b043;
+  --gold-c: #a97a1c;
+  --hl-comment: 128 140 160; --hl-keyword: 251 146 60; --hl-string: 52 211 153; --hl-number: 96 165 250; --hl-title: 240 190 60; --hl-attr: 34 211 238;
+  color-scheme: dark;
+}
+
+@layer base {
+  * { @apply border-line; }
+  body { @apply transition-colors duration-200; }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-thumb { @apply rounded-full bg-line; }
+  ::-webkit-scrollbar-thumb:hover { @apply bg-muted/50; }
+}
+
+@layer components {
+  .btn { @apply inline-flex items-center justify-center gap-1.5 rounded-lg px-3.5 py-2 text-sm font-medium transition focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 disabled:cursor-not-allowed disabled:opacity-50; }
+  .btn-primary { @apply btn font-semibold text-[#2b1d03] shadow-gold transition hover:brightness-110; background-image: linear-gradient(135deg, var(--gold-a), var(--gold-b) 55%, var(--gold-c)); }
+  .btn-ghost { @apply btn border border-gold/50 bg-card text-fg hover:bg-subtle; }
+  .input { @apply w-full rounded-lg border border-gold/40 bg-card px-3 py-2 text-sm text-fg placeholder:text-muted focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/25; }
+
+  /* Metallic gold gradient border (keeps the card background inside) */
+  .gold-border {
+    border: 1px solid transparent;
+    background:
+      linear-gradient(rgb(var(--card)), rgb(var(--card))) padding-box,
+      linear-gradient(135deg, var(--gold-a), var(--gold-b) 38%, var(--gold-c) 65%, var(--gold-a)) border-box;
+  }
+  .gold-text { @apply bg-clip-text text-transparent; background-image: linear-gradient(135deg, var(--gold-a), var(--gold-b) 50%, var(--gold-c)); }
+  .gold-fill { background-image: linear-gradient(135deg, var(--gold-a), var(--gold-b) 55%, var(--gold-c)); }
+
+  /* Rendered markdown (AI replies) */
+  .md { @apply text-sm leading-relaxed; }
+  .md > * + * { @apply mt-2; }
+  .md h1, .md h2, .md h3 { @apply font-semibold; }
+  .md h1 { @apply text-base; }
+  .md ul { @apply list-disc pl-5; }
+  .md ol { @apply list-decimal pl-5; }
+  .md a { @apply text-accent underline underline-offset-2; }
+  .md code { @apply rounded bg-subtle px-1 py-0.5 font-mono text-[0.8em]; }
+  .md pre { @apply overflow-x-auto rounded-lg bg-subtle p-3; }
+  .md pre code { @apply bg-transparent p-0; }
+  .md table { @apply w-full border-collapse text-xs; }
+  .md th, .md td { @apply border border-line px-2 py-1 text-left; }
+  .md th { @apply bg-subtle font-semibold; }
+  .md img { @apply max-w-full rounded-lg; }
+  .md hr { @apply border-line; }
+  .md blockquote { @apply border-l-2 border-accent pl-3 text-muted; }
+}
+
+/* Syntax highlighting (highlight.js classes) */
+.hljs-comment, .hljs-quote { color: rgb(var(--hl-comment)); font-style: italic; }
+.hljs-keyword, .hljs-selector-tag, .hljs-literal, .hljs-built_in, .hljs-doctag { color: rgb(var(--hl-keyword)); }
+.hljs-string, .hljs-regexp, .hljs-addition { color: rgb(var(--hl-string)); }
+.hljs-number, .hljs-symbol, .hljs-bullet { color: rgb(var(--hl-number)); }
+.hljs-title, .hljs-section, .hljs-class .hljs-title, .hljs-function .hljs-title { color: rgb(var(--hl-title)); font-weight: 600; }
+.hljs-attr, .hljs-attribute, .hljs-name, .hljs-variable, .hljs-property, .hljs-params { color: rgb(var(--hl-attr)); }
+.hljs-deletion { color: rgb(var(--danger)); }
+.hljs-emphasis { font-style: italic; } .hljs-strong { font-weight: 700; }
